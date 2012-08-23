@@ -1,0 +1,22 @@
+[Desktop Entry]
+Comment[en_GB]=
+Comment=
+Comment[en_US]=
+Exec=/home/matthieu/src/network/menu.py
+GenericName[en_GB]=
+GenericName=
+GenericName[en_US]=
+Icon=show-menu
+MimeType=
+Name[en_GB]=Custom menu
+Name=Custom menu
+Name[en_US]=Custom menu
+Path=
+StartupNotify=false
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=
