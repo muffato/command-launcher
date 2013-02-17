@@ -5,38 +5,54 @@ from PyQt4 import QtCore
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
+from PyKDE4.kdecore import *
+from PyKDE4.kdeui import *
+
 import sys
 import subprocess
 
+import menu_conf_type
 
 class MenuGUI(QtGui.QWidget):
+
+	default_conf = menu_conf_type.tc_menu(
+		title = 'Useful commands',
+		icon  = 'media-playlist-repeat',
+		items = []
+	)
+
+	icl = KIconLoader()
 
 	def __init__(self, parent=None):
 		QtGui.QWidget.__init__(self, parent)
 		self.trayIcon = QSystemTrayIcon(self)
-		self.trayIcon.setToolTip('Useful commands')
-		#icon = QIcon.fromTheme("show-menu")
-		icon = QIcon.fromTheme("media-playlist-repeat")
-		#icon = QIcon.fromTheme("format-justify-fill")
-		#icon = QIcon("/mnt/data/Matt/Profiles/canard2.png")
-		self.trayIcon.setIcon(icon)
 		self.loadConfig(True)
 		#self.connect(self.trayIcon, SIGNAL("activated(QSystemTrayIcon::ActivationReason)"), callWithAddParams(self.trayClick, ()))
 		self.trayIcon.show()
 
 	def validateConf(self):
-		assert isinstance(menu_conf.config, list)
-		for x in menu_conf.config:
-			if x is None:
-				continue
-			assert isinstance(x, tuple), x
-			assert len(x) == 4, x
-			assert isinstance(x[0], basestring), x[0]
-			assert isinstance(x[1], list), x[1]
-			for y in x[1]:
-				assert isinstance(y, basestring), y
-			assert isinstance(x[2], basestring), x[2]
-			assert isinstance(x[3], bool), x[3]
+		def validate_tc_menu(x):
+			assert isinstance(x, menu_conf_type.tc_menu), x
+			assert isinstance(x.icon, basestring), x
+			assert isinstance(x.title, basestring), x
+			assert isinstance(x.items, list), x
+			for y in x.items:
+				if y is None:
+					continue
+				if isinstance(y, menu_conf_type.tc_item):
+					assert isinstance(y.do_exec, bool), y
+					assert isinstance(y.name, basestring), y
+					assert y.icon is None or isinstance(y.icon, basestring), y
+					assert isinstance(y.command, basestring) or isinstance(y.command, list), y
+					if isinstance(y.command, list):
+						for z in y:
+							assert isinstance(z, basestring), z
+				elif isinstance(y, menu_conf_type.tc_menu):
+					validate_tc_menu(y)
+				else:
+					assert False, y
+
+		#validate_tc_menu(menu_conf.config)
 
 	def loadConfig(self, must_load):
 		try:
@@ -45,28 +61,44 @@ class MenuGUI(QtGui.QWidget):
 			print "Menu configuration valid & loaded"
 		except AssertionError:
 			print "invalid configuration"
-			menu_conf.config = []
+			menu_conf.config = self.default_conf
 		menu = self.buildMenu()
 		if self.trayIcon.contextMenu() is not None:
 			self.trayIcon.contextMenu().destroy()
+		self.trayIcon.setToolTip(menu_conf.config.title)
+		icon = QIcon.fromTheme(menu_conf.config.icon)
+		self.trayIcon.setIcon(icon)
 		self.trayIcon.setContextMenu(menu)
 
 	def buildMenu(self):
+		def addMenuItems(menu, items):
+			print len(items), "items"
+			for x in items:
+				if x is None:
+					menu.addSeparator()
+				elif isinstance(x, menu_conf_type.tc_item):
+					if x.icon is None:
+						mime_icon = KMimeType.iconNameForUrl(KUrl(x.command if isinstance(x.command, basestring) else x.command[0]))
+						print x.command, "->", mime_icon
+						icon = QIcon(self.icl.loadMimeTypeIcon(mime_icon, KIconLoader.Small))
+					elif QIcon.hasThemeIcon(x.icon):
+						icon = QIcon.fromTheme(x.icon)
+					else:
+						icon = QIcon(x.icon)
+					action = menu.addAction(icon, x.name)
+					self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchCommand, (x.command,)))
+					if x.do_exec:
+						self.launchCommand(x.command)
+				elif len(x) == 3:
+					if QIcon.hasThemeIcon(x.icon):
+						icon = QIcon.fromTheme(x.icon)
+					else:
+						icon = QIcon(x.icon)
+					submenu = menu.addMenu(icon, x.title)
+					addMenuItems(submenu, x.items)
+
 		menu = QMenu(self)
-		print len(menu_conf.config), "items"
-		for x in menu_conf.config:
-			if x is None:
-				menu.addSeparator()
-			else:
-				(displayname, command, iconname, immediate_exec) = x
-				if QIcon.hasThemeIcon(iconname):
-					icon = QIcon.fromTheme(iconname)
-				else:
-					icon = QIcon(iconname)
-				action = menu.addAction(icon, displayname)
-				self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchCommand, (command,)))
-				if immediate_exec:
-					self.launchCommand(command)
+		addMenuItems(menu, menu_conf.config.items)
 		menu.addSeparator()
 		action = menu.addAction(QIcon.fromTheme("view-refresh"), "Reload configuration")
 		self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.loadConfig, (False,)))
@@ -80,6 +112,8 @@ class MenuGUI(QtGui.QWidget):
 
 	def launchCommand(self, cmd):
 		print cmd
+		if isinstance(cmd, basestring):
+			cmd = ['xdg-open', cmd]
 		ret = subprocess.call(cmd)
 		print ret
 		return ret
