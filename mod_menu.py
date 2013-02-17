@@ -5,9 +5,6 @@ from PyQt4 import QtCore
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
-from PyKDE4.kdecore import *
-from PyKDE4.kdeui import *
-
 import sys
 import subprocess
 
@@ -21,7 +18,7 @@ class MenuGUI(QtGui.QWidget):
 		items = []
 	)
 
-	icl = KIconLoader()
+	_QFileIconProvider = QFileIconProvider()
 
 	def __init__(self, parent=None):
 		QtGui.QWidget.__init__(self, parent)
@@ -78,9 +75,9 @@ class MenuGUI(QtGui.QWidget):
 					menu.addSeparator()
 				elif isinstance(x, menu_conf_type.tc_item):
 					if x.icon is None:
-						mime_icon = KMimeType.iconNameForUrl(KUrl(x.command if isinstance(x.command, basestring) else x.command[0]))
-						print x.command, "->", mime_icon
-						icon = QIcon(self.icl.loadMimeTypeIcon(mime_icon, KIconLoader.Small))
+						if isinstance(x.command, basestring):
+							info = QFileInfo(x.command)
+							icon = self._QFileIconProvider.icon(info)
 					elif QIcon.hasThemeIcon(x.icon):
 						icon = QIcon.fromTheme(x.icon)
 					else:
