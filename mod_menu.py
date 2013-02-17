@@ -42,7 +42,7 @@ class MenuGUI(QtGui.QWidget):
 		try:
 			reload(menu_conf)
 			self.validateConf()
-			print "Configuration valid & loaded"
+			print "Menu configuration valid & loaded"
 		except AssertionError:
 			print "invalid configuration"
 			menu_conf.config = []
