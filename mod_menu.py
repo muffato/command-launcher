@@ -5,6 +5,7 @@ from PyQt4 import QtCore
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
+import os
 import sys
 import subprocess
 
@@ -19,6 +20,7 @@ class MenuGUI(QtGui.QWidget):
 	)
 
 	_QFileIconProvider = QFileIconProvider()
+	_live_processes = {}
 
 	def __init__(self, parent=None):
 		QtGui.QWidget.__init__(self, parent)
@@ -37,7 +39,7 @@ class MenuGUI(QtGui.QWidget):
 				if y is None:
 					continue
 				if isinstance(y, menu_conf_type.tc_item):
-					assert isinstance(y.do_exec, bool), y
+					assert y.do_exec in [True, False, 'tickbox'], y
 					assert isinstance(y.name, basestring), y
 					assert y.icon is None or isinstance(y.icon, basestring), y
 					assert isinstance(y.command, basestring) or isinstance(y.command, list), y
@@ -82,10 +84,15 @@ class MenuGUI(QtGui.QWidget):
 						icon = QIcon.fromTheme(x.icon)
 					else:
 						icon = QIcon(x.icon)
-					action = menu.addAction(icon, x.name)
-					self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchCommand, (x.command,)))
-					if x.do_exec:
-						self.launchCommand(x.command)
+					if isinstance(x.do_exec, bool):
+						action = menu.addAction(icon, x.name)
+						self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchCommand, (x.command,)))
+						if x.do_exec:
+							self.launchCommand(x.command)
+					else:
+						action = menu.addAction(x.name)
+						action.setCheckable(True)
+						self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchSubCommand, (x.command,)))
 				elif len(x) == 3:
 					if QIcon.hasThemeIcon(x.icon):
 						icon = QIcon.fromTheme(x.icon)
@@ -110,10 +117,22 @@ class MenuGUI(QtGui.QWidget):
 	def launchCommand(self, cmd):
 		print cmd
 		if isinstance(cmd, basestring):
-			cmd = ['xdg-open', cmd]
+			if os.access(cmd, os.X_OK):
+				cmd = [cmd]
+			else:
+				cmd = ['xdg-open', cmd]
 		ret = subprocess.call(cmd)
 		print ret
 		return ret
+
+	def launchSubCommand(self, cmd):
+		print cmd
+		if cmd in self._live_processes:
+			self._live_processes[cmd].terminate()
+			self._live_processes[cmd].wait()
+			del self._live_processes[cmd]
+		else:
+			self._live_processes[cmd] = subprocess.Popen( [cmd], close_fds=True, shell=False, env=os.environ)
 
 
 

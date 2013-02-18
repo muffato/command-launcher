@@ -65,6 +65,16 @@ config = menu_conf_type.tc_menu(
 					command = "/home/matthieu/workspace/cvs/head/ensembl-compara/docs/schema_diagrams",
 					do_exec = False
 				)]
+		), menu_conf_type.tc_menu(
+			title = "Daemons",
+			icon = "application-x-executable",
+			items = [
+				menu_conf_type.tc_item(
+					name = "guiHive",
+					icon = None,
+					command = "/home/matthieu/src/guiHive/server/server.sh",
+					do_exec = 'tickbox'
+				)]
 		)]
 )
 
