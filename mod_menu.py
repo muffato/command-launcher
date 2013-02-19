@@ -117,7 +117,7 @@ class MenuGUI(QtGui.QWidget):
 	def launchCommand(self, cmd):
 		print cmd
 		if isinstance(cmd, basestring):
-			if os.access(cmd, os.X_OK):
+			if os.access(cmd, os.X_OK) and os.path.isfile(cmd):
 				cmd = [cmd]
 			else:
 				cmd = ['xdg-open', cmd]
