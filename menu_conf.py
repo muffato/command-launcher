@@ -54,6 +54,11 @@ config = menu_conf_type.tc_menu(
 					icon = None,
 					command = "/home/matthieu/workspace/cvs/head/ensembl-compara/docs/schema_diagrams/genomic_schema.png",
 					do_exec = False
+				), menu_conf_type.tc_item(
+					name = "eHive schema",
+					icon = None,
+					command = "/home/matthieu/workspace/cvs/head/ensembl-hive/docs/hive_schema.png",
+					do_exec = False
 				), None, menu_conf_type.tc_item(
 					name = "Protein-tree pipeline",
 					icon = None,
