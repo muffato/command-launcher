@@ -80,7 +80,7 @@ config = menu_conf_type.tc_menu(
 					command = "/home/matthieu/src/guiHive/server/server.sh",
 					do_exec = 'tickbox'
 				), menu_conf_type.tc_item(
-					name = "git-it !",
+					name = "gitit",
 					icon = None,
 					command = "/home/matthieu/gitit/gitit.sh",
 					do_exec = 'tickbox'
