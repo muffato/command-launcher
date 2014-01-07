@@ -42,42 +42,42 @@ config = menu_conf_type.tc_menu(
 				menu_conf_type.tc_item(
 					name = "Ensembl Compara release coordination",
 					icon = None,
-					command = "/home/matthieu/workspace/cvs/head/ensembl-compara/docs/ReleaseCoordination.txt",
+					command = "/home/matthieu/workspace/src/head/ensembl-compara/docs/ReleaseCoordination.txt",
 					do_exec = False,
 				), None, menu_conf_type.tc_item(
 					name = "Protein-side schema",
 					icon = None,
-					command = "/home/matthieu/workspace/cvs/head/ensembl-compara/docs/schema/diagrams/protein_schema.png",
+					command = "/home/matthieu/workspace/src/head/ensembl-compara/docs/schema/diagrams/protein_schema.png",
 					do_exec = False
 				), menu_conf_type.tc_item(
 					name = "Genomic-side schema",
 					icon = None,
-					command = "/home/matthieu/workspace/cvs/head/ensembl-compara/docs/schema/diagrams/genomic_schema.png",
+					command = "/home/matthieu/workspace/src/head/ensembl-compara/docs/schema/diagrams/genomic_schema.png",
 					do_exec = False
 				), menu_conf_type.tc_item(
 					name = "eHive schema",
 					icon = None,
-					command = "/home/matthieu/workspace/cvs/head/ensembl-hive/docs/hive_schema.png",
+					command = "/home/matthieu/workspace/src/head/ensembl-hive/docs/hive_schema.png",
 					do_exec = False
 				), None, menu_conf_type.tc_item(
 					name = "Protein-tree pipeline",
 					icon = None,
-					command = "/home/matthieu/workspace/cvs/head/ensembl-compara/docs/pipelines/diagrams/ProteinTrees.png",
+					command = "/home/matthieu/workspace/src/head/ensembl-compara/docs/pipelines/diagrams/ProteinTrees.png",
 					do_exec = False
 				), menu_conf_type.tc_item(
 					name = "ncRNA-tree pipeline",
 					icon = None,
-					command = "/home/matthieu/workspace/cvs/head/ensembl-compara/docs/pipelines/diagrams/ncRNAtrees.png",
+					command = "/home/matthieu/workspace/src/head/ensembl-compara/docs/pipelines/diagrams/ncRNAtrees.png",
 					do_exec = False
 				), menu_conf_type.tc_item(
 					name = "Family pipeline",
 					icon = None,
-					command = "/home/matthieu/workspace/cvs/head/ensembl-compara/docs/pipelines/diagrams/Families.png",
+					command = "/home/matthieu/workspace/src/head/ensembl-compara/docs/pipelines/diagrams/Families.png",
 					do_exec = False
 				), menu_conf_type.tc_item(
 					name = "Other pipelines",
 					icon = None,
-					command = "/home/matthieu/workspace/cvs/head/ensembl-compara/docs/pipelines/diagrams",
+					command = "/home/matthieu/workspace/src/head/ensembl-compara/docs/pipelines/diagrams",
 					do_exec = False
 				)]
 		), menu_conf_type.tc_menu(
