@@ -85,11 +85,6 @@ config = menu_conf_type.tc_menu(
 			icon = "application-x-executable",
 			items = [
 				menu_conf_type.tc_item(
-					name = "guiHive",
-					icon = None,
-					command = "/home/matthieu/src/guiHive/server/server.sh",
-					do_exec = 'tickbox'
-				), menu_conf_type.tc_item(
 					name = "gitit",
 					icon = None,
 					command = "/home/matthieu/gitit/gitit.sh",
