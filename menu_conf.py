@@ -29,11 +29,26 @@ config = menu_conf_type.tc_menu(
 					icon = "computer-laptop",
 					command = ["xrandr", "--output", "eDP1", "--auto", "--output", "VGA1", "--off"],
 					do_exec = False,
-				), None, menu_conf_type.tc_item(
-					name = "Roubaix Wi-Fi",
-					icon = "network-wireless-100",
-					command = ["kdesudo", "/sbin/iwconfig", "wlan0", "essid", "NUMERICABLE-CD62"],
-					do_exec = False,
+				#), None, menu_conf_type.tc_item(
+					#name = "Kill plymouth",
+					#icon = "network-wireless-100",
+					#command = ["kdesudo", "plymouth", "quit"],
+					#do_exec = False,
+				#), menu_conf_type.tc_item(
+					#name = "powersave",
+					#icon = "network-wireless-100",
+					#command = ["kdesudo", "pm-powersave", "true"],
+					#do_exec = False,
+				#), menu_conf_type.tc_item(
+					#name = "eth2 dowm",
+					#icon = "network-wireless-100",
+					#command = ["kdesudo", "ifconfig", "eth2", "down"],
+					#do_exec = False,
+				#), menu_conf_type.tc_item(
+					#name = "eth2 up",
+					#icon = "network-wireless-100",
+					#command = ["kdesudo", "ifconfig", "eth2", "up"],
+					#do_exec = False,
 				)]
 		), menu_conf_type.tc_menu(
 			title = "Compara documentation",
@@ -80,16 +95,16 @@ config = menu_conf_type.tc_menu(
 					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/species_tree/species_tree.pdf",
 					do_exec = False
 				)]
-		), menu_conf_type.tc_menu(
-			title = "Daemons",
-			icon = "application-x-executable",
-			items = [
-				menu_conf_type.tc_item(
-					name = "gitit",
-					icon = None,
-					command = "/home/matthieu/gitit/gitit.sh",
-					do_exec = 'tickbox'
-				)]
+		#), menu_conf_type.tc_menu(
+			#title = "Daemons",
+			#icon = "application-x-executable",
+			#items = [
+				#menu_conf_type.tc_item(
+					#name = "gitit",
+					#icon = None,
+					#command = "/home/matthieu/gitit/gitit.sh",
+					#do_exec = 'tickbox'
+				#)]
 		)]
 )
 
