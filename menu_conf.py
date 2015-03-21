@@ -40,11 +40,6 @@ config = menu_conf_type.tc_menu(
 			icon = "/home/matthieu/src/ebang-400dpi.png",
 			items = [
 				menu_conf_type.tc_item(
-					name = "Ensembl Compara release coordination",
-					icon = None,
-					command = "/home/matthieu/workspace/src/head/ensembl-compara/docs/ReleaseCoordination.txt",
-					do_exec = False,
-				), None, menu_conf_type.tc_item(
 					name = "Protein-side schema",
 					icon = None,
 					command = "/home/matthieu/workspace/src/head/ensembl-compara/docs/schema/diagrams/protein_schema.png",
