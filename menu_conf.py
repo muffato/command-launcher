@@ -84,6 +84,26 @@ config = menu_conf_type.tc_menu(
 					icon = None,
 					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/pipelines/diagrams/Families.png",
 					do_exec = False
+				), None, menu_conf_type.tc_item(
+					name = "Pairwise-aligner pipeline",
+					icon = None,
+					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/pipelines/diagrams/Pairwise.png",
+					do_exec = False
+				), menu_conf_type.tc_item(
+					name = "EPO pipeline",
+					icon = None,
+					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/pipelines/diagrams/epo_pt3.png",
+					do_exec = False
+				), menu_conf_type.tc_item(
+					name = "EPO-2X pipeline",
+					icon = None,
+					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/pipelines/diagrams/EpoLowCoverage.png",
+					do_exec = False
+				), menu_conf_type.tc_item(
+					name = "Mercator-Pecan pipeline",
+					icon = None,
+					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/pipelines/diagrams/MercatorPecan.png",
+					do_exec = False
 				), menu_conf_type.tc_item(
 					name = "Other pipelines",
 					icon = None,
