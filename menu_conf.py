@@ -6,7 +6,7 @@ config = menu_conf_type.tc_menu(
 	icon  = 'favorites',
 	items = [
 		menu_conf_type.tc_menu(
-			title = 'System commands',
+			title = 'Screen configuration',
 			icon = 'preferences-system',
 			items = [
 				menu_conf_type.tc_item(
