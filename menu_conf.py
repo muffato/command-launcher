@@ -52,7 +52,7 @@ config = menu_conf_type.tc_menu(
 				)]
 		), menu_conf_type.tc_menu(
 			title = "Compara documentation",
-			icon = "/home/matthieu/src/ebang-400dpi.png",
+			icon = "/home/matthieu/src/local/ebang-400dpi.png",
 			items = [
 				menu_conf_type.tc_item(
 					name = "Protein-side schema",
