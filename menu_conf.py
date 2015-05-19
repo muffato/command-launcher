@@ -110,9 +110,9 @@ config = menu_conf_type.tc_menu(
 					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/pipelines/diagrams",
 					do_exec = False
 				), None, menu_conf_type.tc_item(
-					name = "Species tree",
+					name = "ensembl-compara checkout",
 					icon = None,
-					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/species_tree/species_tree.pdf",
+					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/",
 					do_exec = False
 				)]
 		#), menu_conf_type.tc_menu(
