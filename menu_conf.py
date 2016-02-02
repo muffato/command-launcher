@@ -67,7 +67,7 @@ config = menu_conf_type.tc_menu(
 				), menu_conf_type.tc_item(
 					name = "eHive schema",
 					icon = None,
-					command = "/home/matthieu/workspace/src/ensembl/ensembl-hive/docs/hive_schema.png",
+					command = "/home/matthieu/workspace/src/hive/master/docs/hive_schema.png",
 					do_exec = False
 				), None, menu_conf_type.tc_item(
 					name = "Protein-tree pipeline",
