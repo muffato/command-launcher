@@ -29,6 +29,11 @@ config = menu_conf_type.tc_menu(
 					icon = "computer-laptop",
 					command = ["xrandr", "--output", "eDP1", "--auto", "--output", "VGA1", "--off"],
 					do_exec = False,
+				), menu_conf_type.tc_item(
+					name = "Single screen configuration",
+					icon = "video-display",
+					command = ["xrandr", "--output", "eDP1", "--off", "--output", "VGA1", "--auto"],
+					do_exec = False,
 				#), None, menu_conf_type.tc_item(
 					#name = "Kill plymouth",
 					#icon = "network-wireless-100",
