@@ -77,42 +77,42 @@ config = menu_conf_type.tc_menu(
 				), None, menu_conf_type.tc_item(
 					name = "Protein-tree pipeline",
 					icon = None,
-					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/pipelines/diagrams/ProteinTrees.png",
+					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/production/diagrams/ProteinTrees.png",
 					do_exec = False
 				), menu_conf_type.tc_item(
 					name = "ncRNA-tree pipeline",
 					icon = None,
-					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/pipelines/diagrams/ncRNAtrees.png",
+					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/production/diagrams/ncRNAtrees.png",
 					do_exec = False
 				), menu_conf_type.tc_item(
 					name = "Family pipeline",
 					icon = None,
-					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/pipelines/diagrams/Families.png",
+					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/production/diagrams/Families.png",
 					do_exec = False
 				), None, menu_conf_type.tc_item(
 					name = "Pairwise-aligner pipeline",
 					icon = None,
-					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/pipelines/diagrams/Pairwise.png",
+					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/production/diagrams/Pairwise.png",
 					do_exec = False
 				), menu_conf_type.tc_item(
 					name = "EPO pipeline",
 					icon = None,
-					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/pipelines/diagrams/epo_pt3.png",
+					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/production/diagrams/epo_pt3.png",
 					do_exec = False
 				), menu_conf_type.tc_item(
 					name = "EPO-2X pipeline",
 					icon = None,
-					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/pipelines/diagrams/EpoLowCoverage.png",
+					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/production/diagrams/EpoLowCoverage.png",
 					do_exec = False
 				), menu_conf_type.tc_item(
 					name = "Mercator-Pecan pipeline",
 					icon = None,
-					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/pipelines/diagrams/MercatorPecan.png",
+					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/production/diagrams/MercatorPecan.png",
 					do_exec = False
 				), menu_conf_type.tc_item(
 					name = "Other pipelines",
 					icon = None,
-					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/pipelines/diagrams",
+					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/docs/production/diagrams",
 					do_exec = False
 				), None, menu_conf_type.tc_item(
 					name = "ensembl-compara checkout",
