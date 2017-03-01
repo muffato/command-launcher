@@ -81,10 +81,14 @@ class MenuGUI(QtGui.QWidget):
 						if isinstance(x.command, basestring):
 							info = QFileInfo(x.command)
 							icon = self._QFileIconProvider.icon(info)
+						else:
+							icon = None
 					elif QIcon.hasThemeIcon(x.icon):
 						icon = QIcon.fromTheme(x.icon)
 					else:
 						icon = QIcon(x.icon)
+					if icon is None:
+						icon = QIcon.fromTheme("utilities-terminal")
 					if not x.background:
 						action = menu.addAction(icon, x.name)
 						self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchCommand, (x.command,)))
