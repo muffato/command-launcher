@@ -39,7 +39,8 @@ class MenuGUI(QtGui.QWidget):
 				if y is None:
 					continue
 				if isinstance(y, menu_conf_type.tc_item):
-					assert y.do_exec in [True, False, 'tickbox'], y
+					assert y.run_at_startup in [True, False], y
+					assert y.background in [True, False], y
 					assert isinstance(y.name, basestring), y
 					assert y.icon is None or isinstance(y.icon, basestring), y
 					assert isinstance(y.command, basestring) or isinstance(y.command, list), y
@@ -84,15 +85,17 @@ class MenuGUI(QtGui.QWidget):
 						icon = QIcon.fromTheme(x.icon)
 					else:
 						icon = QIcon(x.icon)
-					if isinstance(x.do_exec, bool):
+					if not x.background:
 						action = menu.addAction(icon, x.name)
 						self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchCommand, (x.command,)))
-						if x.do_exec:
+						if x.run_at_startup:
 							self.launchCommand(x.command)
 					else:
 						action = menu.addAction(x.name)
 						action.setCheckable(True)
 						self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchSubCommand, (x.command,)))
+						if x.run_at_startup:
+							self.launchSubCommand(x.command)
 				elif len(x) == 3:
 					if QIcon.hasThemeIcon(x.icon):
 						icon = QIcon.fromTheme(x.icon)
