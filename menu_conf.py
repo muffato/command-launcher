@@ -3,11 +3,11 @@ import menu_conf_type
 
 config = menu_conf_type.tc_menu(
 	title = 'Useful commands',
-	icon  = 'favorites',
+	icon  = 'view-list-details',
 	items = [
 		menu_conf_type.tc_menu(
 			title = 'Screen configuration',
-			icon = 'preferences-system',
+			icon = 'video-display',
 			items = [
 				menu_conf_type.tc_item(
 					name = "Dual screen configuration (copy)",
