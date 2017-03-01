@@ -43,6 +43,7 @@ class MenuGUI(QtGui.QWidget):
 					assert y.background in [True, False], y
 					assert isinstance(y.name, basestring), y
 					assert y.icon is None or isinstance(y.icon, basestring), y
+					assert y.cwd is None or isinstance(y.cwd, basestring), y
 					assert isinstance(y.command, basestring) or isinstance(y.command, list), y
 					if isinstance(y.command, list):
 						for z in y:
@@ -91,15 +92,15 @@ class MenuGUI(QtGui.QWidget):
 						icon = QIcon.fromTheme("utilities-terminal")
 					if not x.background:
 						action = menu.addAction(icon, x.name)
-						self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchCommand, (x.command,)))
+						self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchCommand, (x.command, x.cwd,)))
 						if x.run_at_startup:
-							self.launchCommand(x.command)
+							self.launchCommand(x.command, x.cwd)
 					else:
 						action = menu.addAction(x.name)
 						action.setCheckable(True)
-						self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchSubCommand, (x.command,)))
+						self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchSubCommand, (x.command, x.cwd,)))
 						if x.run_at_startup:
-							self.launchSubCommand(x.command)
+							self.launchSubCommand(x.command, x.cwd)
 				elif len(x) == 3:
 					if QIcon.hasThemeIcon(x.icon):
 						icon = QIcon.fromTheme(x.icon)
@@ -121,25 +122,25 @@ class MenuGUI(QtGui.QWidget):
 			self.trayIcon.contextMenu().popup()
 			#self.setVisible(not self.isVisible())
 
-	def launchCommand(self, cmd):
+	def launchCommand(self, cmd, cwd):
 		print cmd
 		if isinstance(cmd, basestring):
 			if os.access(cmd, os.X_OK) and os.path.isfile(cmd):
 				cmd = [cmd]
 			else:
 				cmd = ['xdg-open', cmd]
-		ret = subprocess.call(cmd)
+		ret = subprocess.call(cmd, cwd=cwd)
 		print ret
 		return ret
 
-	def launchSubCommand(self, cmd):
+	def launchSubCommand(self, cmd, cwd):
 		print cmd
 		if cmd in self._live_processes:
 			self._live_processes[cmd].terminate()
 			self._live_processes[cmd].wait()
 			del self._live_processes[cmd]
 		else:
-			self._live_processes[cmd] = subprocess.Popen( [cmd], close_fds=True, shell=False, env=os.environ)
+			self._live_processes[cmd] = subprocess.Popen( [cmd], close_fds=True, shell=False, env=os.environ, cwd=cwd)
 
 
 
