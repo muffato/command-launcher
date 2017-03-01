@@ -28,13 +28,13 @@ config = menu_conf_type.tc_menu(
 					background = False,
 					run_at_startup = False,
 				), menu_conf_type.tc_item(
-					name = "Single screen configuration",
+					name = "Only the laptop screen",
 					icon = "computer-laptop",
 					command = ["xrandr", "--output", "eDP1", "--auto", "--output", "VGA1", "--off"],
 					background = False,
 					run_at_startup = False,
 				), menu_conf_type.tc_item(
-					name = "Single screen configuration",
+					name = "Only the external monitor",
 					icon = "video-display",
 					command = ["xrandr", "--output", "eDP1", "--off", "--output", "VGA1", "--auto"],
 					background = False,
