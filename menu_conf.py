@@ -88,6 +88,26 @@ config = menu_conf_type.tc_menu(
 					name = "ensembl-compara checkout",
 					command = "/home/matthieu/workspace/src/ensembl/ensembl-compara/",
 				)]
+		), menu_conf_type.tc_menu(
+			title = "GIT repositories",
+			icon = "qgit",
+			items = [
+				menu_conf_type.new_menu_item(
+					name = "Compara",
+					icon = "qgit",
+					command = ["qgit", "--all", "--date-order"],
+					cwd = "/home/matthieu/workspace/src/ensembl/ensembl-compara",
+				), menu_conf_type.new_menu_item(
+					name = "eHive",
+					icon = "qgit",
+					command = ["qgit", "--all", "--date-order"],
+					cwd = "/home/matthieu/workspace/src/hive/master",
+				), menu_conf_type.new_menu_item(
+					name = "guiHive",
+					icon = "qgit",
+					command = ["qgit", "--all", "--date-order"],
+					cwd = "/home/matthieu/workspace/src/guiHive/server",
+				)]
 		#), menu_conf_type.tc_menu(
 			#title = "Daemons",
 			#icon = "application-x-executable",
