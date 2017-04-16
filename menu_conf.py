@@ -97,16 +97,19 @@ config = menu_conf_type.tc_menu(
 					icon = "qgit",
 					command = ["qgit", "--all", "--date-order"],
 					cwd = "/home/matthieu/workspace/src/ensembl/ensembl-compara",
+					wait_for = False,
 				), menu_conf_type.new_menu_item(
 					name = "eHive",
 					icon = "qgit",
 					command = ["qgit", "--all", "--date-order"],
 					cwd = "/home/matthieu/workspace/src/hive/master",
+					wait_for = False,
 				), menu_conf_type.new_menu_item(
 					name = "guiHive",
 					icon = "qgit",
 					command = ["qgit", "--all", "--date-order"],
 					cwd = "/home/matthieu/workspace/src/guiHive/server",
+					wait_for = False,
 				)]
 		#), menu_conf_type.tc_menu(
 			#title = "Daemons",
@@ -115,7 +118,7 @@ config = menu_conf_type.tc_menu(
 				#menu_conf_type.new_menu_item(
 					#name = "gitit",
 					#command = "/home/matthieu/gitit/gitit.sh",
-					#background = True,
+					#wait_for = None,
 				#)]
 		)]
 )

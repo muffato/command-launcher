@@ -40,7 +40,7 @@ class MenuGUI(QtGui.QWidget):
 					continue
 				if isinstance(y, menu_conf_type.tc_item):
 					assert y.run_at_startup in [True, False], y
-					assert y.background in [True, False], y
+					assert y.wait_for in [None, True, False], y
 					assert isinstance(y.name, basestring), y
 					assert y.icon is None or isinstance(y.icon, basestring), y
 					assert y.cwd is None or isinstance(y.cwd, basestring), y
@@ -90,17 +90,26 @@ class MenuGUI(QtGui.QWidget):
 						icon = QIcon(x.icon)
 					if icon is None:
 						icon = QIcon.fromTheme("utilities-terminal")
-					if not x.background:
+					# wait_for:
+					# - True: we wait for it to complete
+					# - False: we run in the background without waiting for it
+					# - None: we run the command as a daemon
+					if x.wait_for:
 						action = menu.addAction(icon, x.name)
 						self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchCommand, (x.command, x.cwd,)))
 						if x.run_at_startup:
 							self.launchCommand(x.command, x.cwd)
+					elif x.wait_for is not None:
+						action = menu.addAction(icon, x.name)
+						self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchCommandNoWait, (x.command, x.cwd,)))
+						if x.run_at_startup:
+							self.launchCommandNoWait(x.command, x.cwd)
 					else:
 						action = menu.addAction(x.name)
 						action.setCheckable(True)
-						self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchSubCommand, (x.command, x.cwd,)))
+						self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.controlDaemon, (x.command, x.cwd,)))
 						if x.run_at_startup:
-							self.launchSubCommand(x.command, x.cwd)
+							self.controlDaemon(x.command, x.cwd)
 				elif len(x) == 3:
 					if QIcon.hasThemeIcon(x.icon):
 						icon = QIcon.fromTheme(x.icon)
@@ -133,7 +142,11 @@ class MenuGUI(QtGui.QWidget):
 		print ret
 		return ret
 
-	def launchSubCommand(self, cmd, cwd):
+	def launchCommandNoWait(self, cmd, cwd):
+		print cmd
+		subprocess.Popen(cmd, close_fds=True, shell=False, env=os.environ, cwd=cwd)
+
+	def controlDaemon(self, cmd, cwd):
 		print cmd
 		if cmd in self._live_processes:
 			self._live_processes[cmd].terminate()
