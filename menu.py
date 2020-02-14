@@ -1,12 +1,12 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
-from PyQt4 import QtGui
+from PyQt5.QtWidgets import QApplication
 
 import sys
 
 import mod_menu
 
-app = QtGui.QApplication(sys.argv)
+app = QApplication(sys.argv)
 
 mod_menu.load()
 

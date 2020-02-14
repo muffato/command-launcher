@@ -1,9 +1,7 @@
 
-from PyQt4 import QtGui
-from PyQt4 import QtCore
-
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+from PyQt5.QtCore import QFileInfo
 
 import os
 import sys
@@ -11,7 +9,7 @@ import subprocess
 
 import menu_conf_type
 
-class MenuGUI(QtGui.QWidget):
+class MenuGUI(QWidget):
 
 	default_conf = menu_conf_type.tc_menu(
 		title = 'Useful commands',
@@ -23,10 +21,10 @@ class MenuGUI(QtGui.QWidget):
 	_live_processes = {}
 
 	def __init__(self, parent=None):
-		QtGui.QWidget.__init__(self, parent)
+		QWidget.__init__(self, parent)
 		self.trayIcon = QSystemTrayIcon(self)
 		self.loadConfig(True)
-		#self.connect(self.trayIcon, SIGNAL("activated(QSystemTrayIcon::ActivationReason)"), callWithAddParams(self.trayClick, ()))
+		# self.trayIcon.activated.connect(callWithAddParams(self.trayClick, ()))
 		self.trayIcon.show()
 
 	def validateConf(self):
@@ -96,18 +94,18 @@ class MenuGUI(QtGui.QWidget):
 					# - None: we run the command as a daemon
 					if x.wait_for:
 						action = menu.addAction(icon, x.name)
-						self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchCommand, (x.command, x.cwd,)))
+						action.triggered.connect(callWithAddParams(self.launchCommand, (x.command, x.cwd,)))
 						if x.run_at_startup:
 							self.launchCommand(x.command, x.cwd)
 					elif x.wait_for is not None:
 						action = menu.addAction(icon, x.name)
-						self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.launchCommandNoWait, (x.command, x.cwd,)))
+						action.triggered.connect(callWithAddParams(self.launchCommandNoWait, (x.command, x.cwd,)))
 						if x.run_at_startup:
 							self.launchCommandNoWait(x.command, x.cwd)
 					else:
 						action = menu.addAction(x.name)
 						action.setCheckable(True)
-						self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.controlDaemon, (x.command, x.cwd,)))
+						action.triggered.connect(callWithAddParams(self.controlDaemon, (x.command, x.cwd,)))
 						if x.run_at_startup:
 							self.controlDaemon(x.command, x.cwd)
 				elif len(x) == 3:
@@ -122,8 +120,8 @@ class MenuGUI(QtGui.QWidget):
 		addMenuItems(menu, menu_conf.config.items)
 		menu.addSeparator()
 		action = menu.addAction(QIcon.fromTheme("view-refresh"), "Reload configuration")
-		self.connect(action, SIGNAL("triggered()"), callWithAddParams(self.loadConfig, (False,)))
-		menu.addAction(QIcon.fromTheme("window-close"), "Quit", self, SLOT("close()"))
+		action.triggered.connect(callWithAddParams(self.loadConfig, (False,)))
+		menu.addAction(QIcon.fromTheme("window-close"), "Quit", self.close)
 		return menu
 
 	def trayClick(self, reason):
@@ -155,12 +153,16 @@ class MenuGUI(QtGui.QWidget):
 		else:
 			self._live_processes[cmd] = subprocess.Popen( [cmd], close_fds=True, shell=False, env=os.environ, cwd=cwd)
 
+	def closeEvent(self, event):
+		print("closeEvent", event, event.isAccepted(), event.type(), event.spontaneous())
+		self.trayIcon.hide()
 
 
 def callWithAddParams(f, par):
 	def newf(*args, **kwargs):
 		print "call", f, par, args, kwargs
-		return f(*(par+args), **kwargs)
+		return f(*par)
+		# return f(*(par+args), **kwargs)
 	return newf
 
 
