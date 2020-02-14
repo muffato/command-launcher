@@ -3,7 +3,7 @@ import menu_conf_type
 
 config = menu_conf_type.tc_menu(
 	title = 'Useful commands',
-	icon  = 'view-list-details',
+	icon  = 'bookmarks',
 	items = [
 		menu_conf_type.tc_menu(
 			title = 'Screen configuration',

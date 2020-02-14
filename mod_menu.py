@@ -13,7 +13,7 @@ class MenuGUI(QWidget):
 
 	default_conf = menu_conf_type.tc_menu(
 		title = 'Useful commands',
-		icon  = 'media-playlist-repeat',
+		icon  = 'bookmarks',
 		items = []
 	)
 
